@@ -9,6 +9,16 @@
   </div>
 
   <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile %><br />
+    <%= f.select :profile, User.profiles.keys.map {|profile| [profile.titleize, profile]} %>
+  </div>  
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
