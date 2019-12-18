@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @contract.customer.name %>
+</p>
+
+<p>
+  <strong>Ninja:</strong>
+  <%= @contract.ninja.name if @contract.ninja %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @contract.description %>
+</p>
+
+<p>
+  <strong>Service type:</strong>
+  <%= @contract.service_type %>
+</p>
+
+<p>
+  <strong>Data accept:</strong>
+  <%= @contract.date_accepted %>
+</p>
+
+<p>
+  <strong>Date finish:</strong>
+  <%= @contract.date_finished %>
+</p>
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

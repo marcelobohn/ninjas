@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum profile: %i[customer ninja]
+  validates :profile, inclusion: { in: profiles.keys }
 end

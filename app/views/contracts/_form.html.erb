@@ -1,0 +1,29 @@
+<%= form_with(model: contract, local: true) do |form| %>
+  <% if contract.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(contract.errors.count, "error") %> prohibited this contract from being saved:</h2>
+
+      <ul>
+        <% contract.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_type %>
+    <%= form.select :service_type, Contract.service_types.keys.map {|service_type| [service_type.titleize, service_type]} %>    
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

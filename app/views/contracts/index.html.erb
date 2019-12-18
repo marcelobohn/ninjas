@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Contracts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Ninja</th>
+      <th>Description</th>
+      <th>Service type</th>
+      <th>Date accepted</th>
+      <th>Date finished</th>
+      <th>Rating</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contracts.each do |contract| %>
+      <tr>
+        <td><%= contract.customer.name %></td>
+        <td><%= contract.ninja.name if contract.ninja %></td>
+        <td><%= contract.description %></td>
+        <td><%= contract.service_type %></td>
+        <td><%= contract.date_accepted %></td>
+        <td><%= contract.date_finished %></td>
+        <td><%= contract.rating %></td>
+        <td>
+          <%= link_to 'Show', contract %>
+          <%= link_to 'Accept', contract, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Finish', contract, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contract', new_contract_path %>

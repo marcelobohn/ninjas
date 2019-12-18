@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_124541) do
+ActiveRecord::Schema.define(version: 2019_12_18_171137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contracts", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "ninja_id"
+    t.string "description"
+    t.integer "service_type", null: false
+    t.datetime "date_accepted"
+    t.datetime "date_finished"
+    t.integer "rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_contracts_on_customer_id"
+    t.index ["ninja_id"], name: "index_contracts_on_ninja_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -29,4 +43,6 @@ ActiveRecord::Schema.define(version: 2019_12_18_124541) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "contracts", "users", column: "customer_id"
+  add_foreign_key "contracts", "users", column: "ninja_id"
 end
