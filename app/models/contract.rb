@@ -4,4 +4,11 @@ class Contract < ApplicationRecord
 
   enum service_type: %i[espionage murder sabotage]
   validates :service_type, inclusion: { in: service_types.keys }
+
+  def status
+    return :open if ninja.nil?
+    return :accepted if ninja.present? && date_finished.nil?
+
+    :finished
+  end
 end
