@@ -5,6 +5,6 @@ RSpec.describe "home/index.html.erb", type: :view do
   it "displays default text" do
     render
 
-    expect(rendered).to match('Find me in app/views/home/index.html.erb')  
+    expect(rendered).to match('Welcome to the ninja missions control system')
   end
 end
