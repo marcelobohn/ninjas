@@ -6,7 +6,11 @@ class ContractsController < ApplicationController
   # GET /contracts
   # GET /contracts.json
   def index
-    @contracts = Contract.all
+    if current_user.customer?
+      @contracts = Contract.where(customer: current_user)
+    else
+      @contracts = Contract.where(ninja: current_user).or(Contract.where(ninja: nil))
+    end
   end
 
   # GET /contracts/1
@@ -40,7 +44,7 @@ class ContractsController < ApplicationController
         format.html { redirect_to @contract, notice: 'Contract accpepted with successfully' }
         format.json { render :show, status: :ok, location: @contract }
       else
-        format.html { render :show, notice: 'error'  }
+        format.html { redirect_to @contract, notice: 'Error contract is not open or ninja is not available' }
         format.json { render json: @contract.errors, status: :unprocessable_entity }
       end
     end
@@ -52,7 +56,7 @@ class ContractsController < ApplicationController
         format.html { redirect_to @contract, notice: 'Contract finished with successfully' }
         format.json { render :show, status: :ok, location: @contract }
       else
-        format.html { render :show, notice: 'error'  }
+        format.html { redirect_to @contract, notice: 'Error contract is not finished' }
         format.json { render json: @contract.errors, status: :unprocessable_entity }
       end
     end

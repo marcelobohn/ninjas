@@ -1,12 +1,14 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Contracts</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Customer</th>
-      <th>Ninja</th>
+      <% if current_user.ninja? %>
+        <th>Customer</th>
+      <% end %>
+      <% if current_user.customer? %>
+        <th>Ninja</th>
+      <% end %>
       <th>Description</th>
       <th>Service type</th>
       <th>Date accepted</th>
@@ -19,17 +21,21 @@
   <tbody>
     <% @contracts.each do |contract| %>
       <tr>
-        <td><%= contract.customer.name %></td>
-        <td><%= contract.ninja.name if contract.ninja %></td>
+        <% if current_user.ninja? %>
+          <td><%= contract.customer.name %></td>
+        <% end %>
+        <% if current_user.customer? %>
+          <td><%= contract.ninja.name if contract.ninja %></td>
+        <% end %>
         <td><%= contract.description %></td>
         <td><%= contract.service_type %></td>
         <td><%= contract.date_accepted %></td>
         <td><%= contract.date_finished %></td>
         <td><%= contract.rating %></td>
         <td>
-          <%= link_to 'Show', contract %>
-          <%= link_to 'Accept', {action: 'accept', id: contract.id}, method: :get,  data: { confirm: 'Are you sure?' } if contract.open? %>
-          <%= link_to 'Finish', {action: 'finish', id: contract.id}, method: :get,  data: { confirm: 'Are you sure?' } if contract.accepted? %>
+          <%= link_to_show contract %>
+          <%= link_to 'Accept', { action: 'accept', id: contract.id }, method: :get, class: 'btn btn-primary btn-sm',  data: { confirm: 'Are you sure?' } if contract.open? %>
+          <%= link_to 'Finish', { action: 'finish', id: contract.id }, method: :get, class: 'btn btn-primary btn-sm',  data: { confirm: 'Are you sure?' } if contract.accepted? && current_user.ninja? %>
         </td>
       </tr>
     <% end %>
@@ -38,4 +44,4 @@
 
 <br>
 
-<%= link_to 'New Contract', new_contract_path %>
+<%= link_to_new new_contract_path %>
