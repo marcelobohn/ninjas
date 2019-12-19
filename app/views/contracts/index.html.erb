@@ -29,7 +29,7 @@
         <td>
           <%= link_to 'Show', contract %>
           <%= link_to 'Accept', {action: 'accept', id: contract.id}, method: :get,  data: { confirm: 'Are you sure?' } if contract.open? %>
-          <%= link_to 'Finish', contract, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Finish', {action: 'finish', id: contract.id}, method: :get,  data: { confirm: 'Are you sure?' } if contract.accepted? %>
         </td>
       </tr>
     <% end %>

@@ -1,6 +1,6 @@
 class ContractsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_contract, only: %i[show accept]
+  before_action :set_contract, only: %i[show accept finish]
   before_action :check_is_customer, only: %i[new create]
 
   # GET /contracts
@@ -38,6 +38,18 @@ class ContractsController < ApplicationController
     respond_to do |format|
       if @contract.ninja_accept(current_user)
         format.html { redirect_to @contract, notice: 'Contract accpepted with successfully' }
+        format.json { render :show, status: :ok, location: @contract }
+      else
+        format.html { render :show, notice: 'error'  }
+        format.json { render json: @contract.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def finish
+    respond_to do |format|
+      if @contract.ninja_finish(current_user)
+        format.html { redirect_to @contract, notice: 'Contract finished with successfully' }
         format.json { render :show, status: :ok, location: @contract }
       else
         format.html { render :show, notice: 'error'  }

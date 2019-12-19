@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :contracts do
     get 'accept', on: :member
+    get 'finish', on: :member
   end
   devise_for :users
   root 'home#index'
