@@ -1,2 +1,18 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Welcome to the ninja missions control system</h1>
+<% if user_signed_in? %>
+<% if current_user.ninja? %>
+  <p>You are a ninja, accept missions and execute</p>
+  <%= link_to 'Contracts', contracts_path %>
+<% else %>
+  <p>You are a customer, create new contracs e wait for a ninja</p>
+  <%= link_to 'Contracts', contracts_path %>
+
+  <hr />
+  <p>Ninjas [ contracs ] </p>
+  <%  User.ninjas.each do |ninja| %>
+    <div>
+      <%= ninja.name %> [ <%= ninja.ninja_contracts.count %> ]
+    </div>
+  <% end %>
+<% end %>
+<% end %>

@@ -4,10 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :ninja_contracts, foreign_key: 'ninja_id', class_name: 'Contract'
+
   enum profile: %i[customer ninja]
   validates :profile, inclusion: { in: profiles.keys }
 
   scope :available_ninjas, -> { where(profile: :ninja).where.not(id: [ninjas_in_mission.pluck(:ninja_id)]) }
+  scope :ninjas, -> { where(profile: :ninja) }
 
   def ninja_available?
     return false unless ninja?
