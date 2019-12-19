@@ -8,8 +8,9 @@ class Contract < ApplicationRecord
   def status
     return :open if ninja.nil?
     return :accepted if ninja.present? && date_finished.nil?
+    return :finished if rating.nil?
 
-    :finished
+    :rated
   end
 
   def open?
@@ -24,6 +25,10 @@ class Contract < ApplicationRecord
     status == :finished
   end
 
+  def rated?
+    status == :rated
+  end
+
   def ninja_accept(user)
     return false unless open?
     return false unless user.ninja_available?
@@ -36,5 +41,13 @@ class Contract < ApplicationRecord
     return false if user != ninja
 
     update(date_finished: Time.now)
+  end
+
+  def customer_rating(user, rate)
+    return false unless finished?
+    return false if user != customer
+    return false if rating.present?
+
+    update(rating: rate)
   end
 end

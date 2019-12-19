@@ -3,10 +3,10 @@
 <table class="table">
   <thead>
     <tr>
-      <% if current_user.ninja? %>
+      <% if current_user && current_user.ninja? %>
         <th>Customer</th>
       <% end %>
-      <% if current_user.customer? %>
+      <% if current_user && current_user.customer? %>
         <th>Ninja</th>
       <% end %>
       <th>Description</th>
@@ -21,10 +21,10 @@
   <tbody>
     <% @contracts.each do |contract| %>
       <tr>
-        <% if current_user.ninja? %>
+        <% if current_user && current_user.ninja? %>
           <td><%= contract.customer.name %></td>
         <% end %>
-        <% if current_user.customer? %>
+        <% if current_user && current_user.customer? %>
           <td><%= contract.ninja.name if contract.ninja %></td>
         <% end %>
         <td><%= contract.description %></td>
@@ -36,6 +36,7 @@
           <%= link_to_show contract %>
           <%= link_to 'Accept', { action: 'accept', id: contract.id }, method: :get, class: 'btn btn-primary btn-sm',  data: { confirm: 'Are you sure?' } if contract.open? %>
           <%= link_to 'Finish', { action: 'finish', id: contract.id }, method: :get, class: 'btn btn-primary btn-sm',  data: { confirm: 'Are you sure?' } if contract.accepted? && current_user.ninja? %>
+          <%= link_to 'Rating', { action: 'make_rating', id: contract.id }, method: :get, class: 'btn btn-primary btn-sm' if contract.finished? && current_user.customer? %>
         </td>
       </tr>
     <% end %>

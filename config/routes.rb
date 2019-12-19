@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :contracts do
     get 'accept', on: :member
     get 'finish', on: :member
+    get 'make_rating', on: :member
+    post 'rating', on: :member
+    patch 'rating', on: :member
   end
   devise_for :users
   root 'home#index'

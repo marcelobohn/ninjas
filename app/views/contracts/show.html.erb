@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Customer:</strong>
   <%= @contract.customer.name %>
@@ -28,6 +26,11 @@
 <p>
   <strong>Date finish:</strong>
   <%= @contract.date_finished %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @contract.rating %>
 </p>
 
 <%= link_to 'Back', contracts_path %>

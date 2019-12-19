@@ -1,0 +1,12 @@
+<%= form_with(model: @contract, local: true, url: { action: 'rating' }) do |form| %>
+  <div class="form-group row">
+    <%= form.label :rating_value, class: "col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-form-label"  %>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <%= form.text_field :rating_value, class: "form-control form-control-sm" %>
+    </div>  
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

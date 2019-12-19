@@ -30,53 +30,60 @@ RSpec.describe Contract, type: :model do
   end
 
   context '#ninja_accept' do
-    before do
-      subject = described_class.create!(
-        customer: user,
-        service_type: :sabotage
-        )
-    end
+    let(:contract) {
+      described_class.create!( 
+        customer: user, service_type: :sabotage
+      )
+    }
 
     it 'change status when ninja available' do
-      expect(subject.open?).to be_truthy
+      expect(contract.open?).to be_truthy
 
-      subject.ninja_accept(ninja)
-      expect(subject.open?).to be_falsey
+      contract.ninja_accept(ninja)
+      expect(contract.open?).to be_falsey
     end
 
     it 'dont change status when ninja is not available' do
-      new_contract = described_class.create!(
+      described_class.create!(
         customer: user,
         ninja: ninja,
-        service_type: :sabotage)
+        service_type: :sabotage
+      )
 
-      subject.ninja_accept(ninja)
-      expect(subject.open?).to be_truthy
+      contract.ninja_accept(ninja)
+      expect(contract.open?).to be_truthy
     end
   end
 
   context '#ninja_finish' do
-    before do
-      subject = described_class.create!(
-        customer: user,
-        service_type: :sabotage
-        )
-    end
+    let(:contract) {
+      described_class.create!(
+        customer: user, ninja: ninja, date_accepted: Time.now, service_type: :sabotage
+      )
+    }
 
     it 'change status when ninja its tha same to accept' do
-      subject.ninja_accept(ninja)
-      expect(subject.accepted?).to be_truthy
-
-      subject.ninja_finish(ninja)
-      expect(subject.finished?).to be_truthy
+      contract.ninja_finish(ninja)
+      expect(contract.finished?).to be_truthy
     end
 
     it 'dont change status when ninja its other' do
-      subject.ninja_accept(ninja)
-      expect(subject.accepted?).to be_truthy
+      contract.ninja_finish(ninja_other)
+      expect(contract.finished?).to be_falsey
+    end
+  end
 
-      subject.ninja_finish(ninja_other)
-      expect(subject.finished?).to be_falsey
+  context '#customer_rating' do
+    let(:contract) {
+      described_class.create!(
+        customer: user, ninja: ninja, service_type: :sabotage, date_finished: Time.now
+      )
+    }
+
+    it 'change status when ninja its tha same to accept' do
+      contract.customer_rating(user, 8)
+
+      expect(contract.rating).to eq(8)
     end
   end
 end

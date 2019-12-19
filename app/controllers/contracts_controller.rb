@@ -1,6 +1,6 @@
 class ContractsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_contract, only: %i[show accept finish]
+  before_action :set_contract, only: %i[show accept finish make_rating rating]
   before_action :check_is_customer, only: %i[new create]
 
   # GET /contracts
@@ -57,6 +57,20 @@ class ContractsController < ApplicationController
         format.json { render :show, status: :ok, location: @contract }
       else
         format.html { redirect_to @contract, notice: 'Error contract is not finished' }
+        format.json { render json: @contract.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def make_rating; end
+
+  def rating
+    respond_to do |format|
+      if @contract.customer_rating(current_user, params[:contract][:rating_value])
+        format.html { redirect_to @contract, notice: 'Contract rating with successfully' }
+        format.json { render :show, status: :ok, location: @contract }
+      else
+        format.html { redirect_to @contract, notice: 'Error contract not rating' }
         format.json { render json: @contract.errors, status: :unprocessable_entity }
       end
     end
