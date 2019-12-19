@@ -11,4 +11,15 @@ class Contract < ApplicationRecord
 
     :finished
   end
+
+  def open?
+    status == :open
+  end
+
+  def ninja_accept(user)
+    return false unless open?
+    return false unless user.ninja_available?
+
+    update(ninja: user, date_accepted: Time.now)
+  end
 end

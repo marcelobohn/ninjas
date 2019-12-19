@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     it 'profile is customer' do
       user = create(:user, :customer)
 
-      expect(user.email).to eq 'user@provider.com'
+      expect(user.email).to eq 'customer@provider.com'
       expect(user.profile).to eq 'customer'
       expect(user.name).to eq 'customer sample'
       expect(user.customer?).to be_truthy
@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
     it 'profile is ninja' do
       user = create(:user, :ninja)
 
-      expect(user.email).to eq 'user@provider.com'
+      expect(user.email).to eq 'ninja@provider.com'
       expect(user.profile).to eq 'ninja'
       expect(user.name).to eq 'ninja sample'
       expect(user.customer?).to be_falsey
