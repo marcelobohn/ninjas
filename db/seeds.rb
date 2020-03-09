@@ -10,9 +10,9 @@ customer = User.create(name: 'customer', email: 'customer@example.com', password
 ninja = User.create(name: 'ninja', email: 'ninja@example.com', password: '123456', password_confirmation: '123456', profile: :ninja)
 
 # new contract
-Contract.create customer: customer, service_type: :espionage
+Contract.create customer_id: customer.id, service_type: :espionage
 # contract accepted
-Contract.create customer: customer, ninja: ninja, date_accepted: Time.now, service_type: :murder
+Contract.create customer_id: customer.id, ninja_id: ninja.id, date_accepted: Time.now, service_type: :murder
 # contract finished
 Contract.create customer: customer, ninja: ninja, date_accepted: Time.now, date_finished: Time.now, service_type: :sabotage
 # contract finished with rating

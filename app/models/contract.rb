@@ -5,7 +5,7 @@ class Contract < ApplicationRecord
   enum service_type: %i[espionage murder sabotage]
   validates :service_type, inclusion: { in: service_types.keys }
 
-  after_create :send_email_to_available_ninjas
+  after_create :send_email_to_available_ninjas unless Rails.env.test?
 
   def status
     return :open if ninja.nil?
